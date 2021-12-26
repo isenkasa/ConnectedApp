@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { FirebaseTSApp } from 'firebasets/firebasetsApp/firebaseTSApp';
+import { environment } from 'src/environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -17,4 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(){
+    FirebaseTSApp.init(environment.firebaseConfig)
+  }
+ }
