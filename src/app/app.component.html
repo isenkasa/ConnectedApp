@@ -6,8 +6,11 @@
             </div>
         </div>
         <div id="nav-bar-right">
-            <div (click)="onLoginClick()" class="nav-bar-items">
+            <div *ngIf="!loggedIn()" (click)="onLoginClick()" class="nav-bar-items">
                 Login
+            </div>
+            <div *ngIf="loggedIn()" (click)="onLogoutClick()" class="nav-bar-items">
+                Logout
             </div>
         </div>
     </div>
