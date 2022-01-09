@@ -38,7 +38,7 @@ export class PostFeedComponent implements OnInit {
           );
         },
         onFail: err => {
-
+          console.log('Error in getPosts: ', err)
         }
       }
     );
