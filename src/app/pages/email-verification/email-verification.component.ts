@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
+import { Component, OnInit } from '@angular/core'
+import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth'
 import { Router } from '@angular/router'
 
 @Component({
@@ -8,20 +8,18 @@ import { Router } from '@angular/router'
   styleUrls: ['./email-verification.component.css']
 })
 export class EmailVerificationComponent implements OnInit {
+  auth = new FirebaseTSAuth()
+  constructor (private readonly router: Router) { }
 
-  auth = new FirebaseTSAuth();
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    if(this.auth.isSignedIn() && !this.auth?.getAuth()?.currentUser?.emailVerified)
-    {
-      this.auth.sendVerificationEmail();
+  ngOnInit (): void {
+    if (this.auth.isSignedIn() && !this.auth?.getAuth()?.currentUser?.emailVerified) {
+      this.auth.sendVerificationEmail()
     } else {
-      this.router.navigate([""]);
+      this.router.navigate([''])
     }
   }
 
-  onResendClick() {
-    this.auth.sendVerificationEmail();
+  onResendClick () {
+    this.auth.sendVerificationEmail()
   }
 }

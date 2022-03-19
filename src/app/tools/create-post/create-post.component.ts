@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
-import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
-import { FirebaseTSStorage } from 'firebasets/firebasetsStorage/firebaseTSStorage';
-import { FirebaseTSApp } from 'firebasets/firebasetsApp/firebaseTSApp';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core'
+import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth'
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore'
+import { FirebaseTSStorage } from 'firebasets/firebasetsStorage/firebaseTSStorage'
+import { FirebaseTSApp } from 'firebasets/firebasetsApp/firebaseTSApp'
+import { MatDialogRef } from '@angular/material/dialog'
 
 @Component({
   selector: 'app-create-post',
@@ -11,39 +11,39 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  selectedImageFile!: File;
-  auth = new FirebaseTSAuth();
-  firestore = new FirebaseTSFirestore();
-  storage = new FirebaseTSStorage();
+  selectedImageFile!: File
+  auth = new FirebaseTSAuth()
+  firestore = new FirebaseTSFirestore()
+  storage = new FirebaseTSStorage()
 
-  constructor(private dialog: MatDialogRef<CreatePostComponent>) { }
+  constructor (private readonly dialog: MatDialogRef<CreatePostComponent>) { }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
   }
 
-  onPostClick(commentInput: HTMLTextAreaElement) {
-    let comment = commentInput.value;
-    if (comment.length <= 0) return;
+  onPostClick (commentInput: HTMLTextAreaElement) {
+    const comment = commentInput.value
+    if (comment.length <= 0) return
     if (this.selectedImageFile) {
-      this.uploadImagePost(comment);
+      this.uploadImagePost(comment)
     } else {
-      this.uploadPost(comment);
+      this.uploadPost(comment)
     }
   }
 
-  uploadImagePost(comment: string) {
-    let postId = this.firestore.genDocId();
+  uploadImagePost (comment: string) {
+    const postId = this.firestore.genDocId()
     this.storage.upload(
       {
-        uploadName: "upload Image Post",
-        path: ["Posts", postId, "image"],
+        uploadName: 'upload Image Post',
+        path: ['Posts', postId, 'image'],
         data: {
           data: this.selectedImageFile
         },
         onComplete: (downloadUrl) => {
           this.firestore.create(
             {
-              path: ["Posts", postId],
+              path: ['Posts', postId],
               data: {
                 comment: comment,
                 creatorId: this.auth.getAuth().currentUser?.uid,
@@ -51,44 +51,43 @@ export class CreatePostComponent implements OnInit {
                 timestamp: FirebaseTSApp.getFirestoreTimestamp()
               },
               onComplete: (docId) => {
-                this.dialog.close();
+                this.dialog.close()
               }
             }
-          );
+          )
         }
       }
-    );
+    )
   }
 
-  uploadPost(comment: string) {
+  uploadPost (comment: string) {
     this.firestore.create(
       {
-        path: ["Posts"],
+        path: ['Posts'],
         data: {
           comment: comment,
           creatorId: this.auth.getAuth().currentUser?.uid,
           timestamp: FirebaseTSApp.getFirestoreTimestamp()
         },
         onComplete: (docId) => {
-          this.dialog.close();
+          this.dialog.close()
         }
-      }
-    );
-  }
-
-  onPhotoSelected(photoSelector: HTMLInputElement) {
-    this.selectedImageFile = photoSelector.files![0];
-    if (!this.selectedImageFile) return;
-    let fileReader = new FileReader();
-    fileReader.readAsDataURL(this.selectedImageFile);
-    fileReader.addEventListener(
-      "loadend",
-      ev => {
-        let readableString = fileReader.result?.toString();
-        let postPreviewImage = <HTMLImageElement>document.getElementById("post-preview-image");
-        postPreviewImage.src = readableString!;
       }
     )
   }
 
+  onPhotoSelected (photoSelector: HTMLInputElement) {
+    this.selectedImageFile = photoSelector.files![0]
+    if (!this.selectedImageFile) return
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(this.selectedImageFile)
+    fileReader.addEventListener(
+      'loadend',
+      ev => {
+        const readableString = fileReader.result?.toString()
+        const postPreviewImage = <HTMLImageElement>document.getElementById('post-preview-image')
+        postPreviewImage.src = readableString!
+      }
+    )
+  }
 }
