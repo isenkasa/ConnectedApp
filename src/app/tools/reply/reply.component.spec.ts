@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ReplyComponent } from './reply.component';
+import { ReplyComponent } from './reply.component'
 
 describe('ReplyComponent', () => {
-  let component: ReplyComponent;
-  let fixture: ComponentFixture<ReplyComponent>;
+  let component: ReplyComponent
+  let fixture: ComponentFixture<ReplyComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReplyComponent ]
+      declarations: [ReplyComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReplyComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ReplyComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { AuthenticatorComponent } from './tools/authenticator/authenticator.component';
-import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
+import { Component } from '@angular/core'
+import { MatBottomSheet } from '@angular/material/bottom-sheet'
+import { AuthenticatorComponent } from './tools/authenticator/authenticator.component'
+import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth'
 import { Router } from '@angular/router'
-import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
-import firebase from 'firebase';
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore'
+import firebase from 'firebase'
 
 @Component({
   selector: 'app-root',
@@ -12,16 +12,16 @@ import firebase from 'firebase';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ConnectedApp';
-  auth = new FirebaseTSAuth();
-  firestore = new FirebaseTSFirestore();
-  userHasProfile = true;
-  private static userDocument: UserDocument | null;
+  title = 'ConnectedApp'
+  auth = new FirebaseTSAuth()
+  firestore = new FirebaseTSFirestore()
+  userHasProfile = true
+  private static userDocument: UserDocument | null
 
-  constructor(
-      private loginSheet: MatBottomSheet,
-      private router: Router
-    ) {
+  constructor (
+    private readonly loginSheet: MatBottomSheet,
+    private readonly router: Router
+  ) {
     this.auth.listenToSignInStateChanges(
       user => {
         this.auth.checkSignInState(
@@ -29,13 +29,13 @@ export class AppComponent {
             whenSignedIn: user => {
             },
             whenSignedOut: user => {
-              AppComponent.userDocument = null;
+              AppComponent.userDocument = null
             },
             whenSignedInAndEmailNotVerified: user => {
-              this.router.navigate(["emailVerification"])
+              this.router.navigate(['emailVerification'])
             },
             whenSignedInAndEmailVerified: user => {
-              this.getUserProfile();
+              this.getUserProfile()
             },
             whenChanged: user => {
             }
@@ -45,46 +45,46 @@ export class AppComponent {
     )
   }
 
-  public static getUserDocument() {
-    return AppComponent.userDocument;
+  public static getUserDocument () {
+    return AppComponent.userDocument
   }
 
-  getUsername() {
-    return AppComponent.userDocument?.publicName;
+  getUsername () {
+    return AppComponent.userDocument?.publicName
   }
 
-  getUserProfile() {
+  getUserProfile () {
     this.firestore.listenToDocument(
       {
-        name: "Getting Document",
-        path: ["Users", this.auth.getAuth().currentUser!.uid],
+        name: 'Getting Document',
+        path: ['Users', this.auth.getAuth().currentUser!.uid],
         onUpdate: (result) => {
-          AppComponent.userDocument = <UserDocument> result.data();
-          this.userHasProfile = result.exists;
-          AppComponent.userDocument.userId = this.auth.getAuth().currentUser!.uid;
+          AppComponent.userDocument = <UserDocument> result.data()
+          this.userHasProfile = result.exists
+          AppComponent.userDocument.userId = this.auth.getAuth().currentUser!.uid
           if (this.userHasProfile) {
-            this.router.navigate(["postfeed"]);
+            this.router.navigate(['postfeed'])
           }
         }
       }
-    );
+    )
   }
 
-  onLogoutClick() {
-    this.auth.signOut();
+  onLogoutClick () {
+    this.auth.signOut()
   }
 
-  loggedIn() {
-    return this.auth.isSignedIn();
+  loggedIn () {
+    return this.auth.isSignedIn()
   }
 
-  onLoginClick(){
-    this.loginSheet.open(AuthenticatorComponent);
+  onLoginClick () {
+    this.loginSheet.open(AuthenticatorComponent)
   }
 }
 
 export interface UserDocument {
-  publicName: string;
-  description: string;
-  userId: string;
+  publicName: string
+  description: string
+  userId: string
 }

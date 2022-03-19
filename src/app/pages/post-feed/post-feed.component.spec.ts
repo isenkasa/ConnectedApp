@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PostFeedComponent } from './post-feed.component';
+import { PostFeedComponent } from './post-feed.component'
 
 describe('PostFeedComponent', () => {
-  let component: PostFeedComponent;
-  let fixture: ComponentFixture<PostFeedComponent>;
+  let component: PostFeedComponent
+  let fixture: ComponentFixture<PostFeedComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostFeedComponent ]
+      declarations: [PostFeedComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PostFeedComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PostFeedComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

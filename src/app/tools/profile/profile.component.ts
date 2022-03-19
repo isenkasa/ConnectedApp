@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
-import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
+import { Component, Input, OnInit } from '@angular/core'
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore'
+import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth'
 
 @Component({
   selector: 'app-profile',
@@ -9,36 +9,36 @@ import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 })
 export class ProfileComponent implements OnInit {
   @Input()
-  show: boolean = false;
-  
-  firestore: FirebaseTSFirestore;
-  auth: FirebaseTSAuth;
+  show: boolean = false
 
-  constructor() {
-    this.firestore = new FirebaseTSFirestore();
-    this.auth = new FirebaseTSAuth();
-   }
+  firestore: FirebaseTSFirestore
+  auth: FirebaseTSAuth
 
-  ngOnInit(): void {
+  constructor () {
+    this.firestore = new FirebaseTSFirestore()
+    this.auth = new FirebaseTSAuth()
   }
 
-  onContinueClick(
+  ngOnInit (): void {
+  }
+
+  onContinueClick (
     nameInput: HTMLInputElement,
     descriptionInput: HTMLTextAreaElement
   ) {
-    let name = nameInput.value;
-    let description = descriptionInput.value;
+    const name = nameInput.value
+    const description = descriptionInput.value
     this.firestore.create(
       {
-        path: ["Users", this.auth.getAuth().currentUser!.uid],
+        path: ['Users', this.auth.getAuth().currentUser!.uid],
         data: {
           publicName: name,
           description: description
         },
         onComplete: (docId) => {
-          alert("Profile Created");
-          nameInput.value = "";
-          descriptionInput.value = "";
+          alert('Profile Created')
+          nameInput.value = ''
+          descriptionInput.value = ''
         },
         onFail: (err) => {
 
@@ -46,5 +46,4 @@ export class ProfileComponent implements OnInit {
       }
     )
   }
-
 }
