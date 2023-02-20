@@ -4,21 +4,16 @@
 }
 
 #home-page-landing {
-    position: fixed;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    color: #f1f1f1;
     width: 100%;
-    padding: 20px;
+    height: 100%;
+    background-image: url("src/assets/connected-background.jpg");
+    background-size: cover;
+    background-position: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100%;
+    min-height: 800px;
 }
-
-#background-video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-  }
 
 #landing-left {
     display: flex;
